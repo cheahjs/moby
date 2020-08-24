@@ -73,6 +73,9 @@ func (p *v2Puller) Pull(ctx context.Context, ref reference.Named, platform *spec
 		return err
 	}
 
+	jsBytes, _ := json.Marshal(p)
+	logrus.Infof("Pulling ref %#v, pull config %s", ref, string(jsBytes))
+
 	if err = p.pullV2Repository(ctx, ref, platform); err != nil {
 		if _, ok := err.(fallbackError); ok {
 			return err
